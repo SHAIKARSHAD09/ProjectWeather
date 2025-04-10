@@ -6,7 +6,7 @@ function SearchBar({ onSearch }) {
 
   const handleSearch = async () => {
     try {
-      const API_KEY = VITE_WEATHER_API_KEY; 
+      const API_KEY = import.meta.env.VITE_WEATHER_API_KEY; 
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}`);
 
       if (response.data.coord) {
