@@ -1,7 +1,6 @@
 import React from "react";
 
 const FiveDay = ({ forecastData }) => {
-  // Format date function to convert timestamps to readable dates
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-GB", {
@@ -15,29 +14,27 @@ const FiveDay = ({ forecastData }) => {
     return <div className="text-center text-white">No forecast data available</div>;
   }
 
-  // Filter to get one data point per day (3-hour intervals, 8 intervals per day)
   const dayData = forecastData.list.filter((_, index) => index % 8 === 0).slice(0, 5);
 
   return (
-    <div className="bg-sky-950 text-white rounded-md w-[300px] px-4 py-3">
+    <div className="bg-sky-950 text-white rounded-md w-full sm:max-w-md px-4 py-4">
       {dayData.length < 5 ? (
         <div className="text-center text-yellow-300">
           Not enough data for a 5-day forecast.
         </div>
       ) : (
-        dayData.map((item, index) => (
-          <div key={index} className="mb-6 flex justify-between items-center">
-            <div className="text-sm font-bold">
-              {Math.round(item.main.temp)}°C
+        <div className="flex flex-col gap-4">
+          {dayData.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-sm sm:text-base"
+            >
+              <div className="font-bold">{Math.round(item.main.temp)}°C</div>
+              <div className="font-medium">{formatDate(item.dt_txt)}</div>
+              <div className="capitalize text-gray-300">{item.weather[0].description}</div>
             </div>
-            <div className="text-sm font-bold">
-              {formatDate(item.dt_txt)}
-            </div>
-            <div className="text-sm">
-              {item.weather[0].description}
-            </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

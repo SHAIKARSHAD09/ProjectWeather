@@ -6,7 +6,7 @@ function SearchBar({ onSearch }) {
 
   const handleSearch = async () => {
     try {
-      const API_KEY = '45bc68961e69bc60e993bf8a837b64fb'; // Replace with your OpenWeatherMap API key
+      const API_KEY = VITE_WEATHER_API_KEY; // Replace with your OpenWeatherMap API key
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${API_KEY}`);
 
       if (response.data.coord) {
@@ -27,6 +27,11 @@ function SearchBar({ onSearch }) {
     placeholder="Search for a city..."
     value={query}
     onChange={(e) => setQuery(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter") {
+        handleSearch();
+      }
+    }}
     className="w-full md:w-80 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-sky-950 focus:ring-1 focus:ring-blue-500"
   />
   <button

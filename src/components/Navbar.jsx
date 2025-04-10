@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import FilterDramaTwoToneIcon from '@mui/icons-material/FilterDramaTwoTone';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Link } from "react-router-dom";
 
 const Navbar = ({ onSearch, onLocationSearch }) => {
@@ -16,67 +15,58 @@ const Navbar = ({ onSearch, onLocationSearch }) => {
     }
   };
 
-  const handleCurrentLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          console.log(`Current coordinates: Latitude ${latitude}, Longitude ${longitude}`);
-          // Call the function to search weather for the current location
-          if (onLocationSearch) {
-            onLocationSearch(latitude, longitude);
-          }
-        },
-        (error) => {
-          console.error("Error fetching current location:", error);
-          alert("Unable to retrieve your location. Please allow location access.");
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by your browser.");
-    }
-  };
+  
 
   return (
-    <nav className="p-2 px-8 bg-gray-800 text-white">
-      <div className="flex justify-between items-center">
+    <nav className="p-4 bg-gray-800 text-white">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+        {/* Logo Section */}
         <div className="flex items-center gap-2">
           <FilterDramaTwoToneIcon />
-          <p className="font-bold text-lg">Weather</p>
+          <p className="font-bold text-lg">WeatherApp</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Link to="/" className="px-4 hover:underline text-white">Home</Link>
-          <Link to="/about" className="px-4 hover:underline text-white">About</Link>
-          <TextField
-            variant="outlined"
-            placeholder="Search city 'London'"
-            size="small"
-            value={searchCity}
-            onChange={(e) => setSearchCity(e.target.value)}
-            className="bg-white rounded-full w-88"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSearchClick}
-            className="rounded-md bg-teal-700"
-          >
-            Search
-          </Button>
+
+        {/* Nav Links & Search */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full md:w-auto">
+          <div className="flex justify-center sm:justify-start gap-2">
+            <Link to="/" className="px-2 hover:underline text-white text-sm sm:text-base">Home</Link>
+            <Link to="/about" className="px-2 hover:underline text-white text-sm sm:text-base">About</Link>
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <TextField
+              variant="outlined"
+              placeholder="Search city 'London'"
+              size="small"
+              value={searchCity}
+              onChange={(e) => setSearchCity(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearchClick();
+                }
+              }}
+              className="bg-white rounded-full w-full sm:w-72"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <Button
+              variant="contained"
+              onClick={handleSearchClick}
+              className="bg-teal-700"
+              style={{ textTransform: 'none' }}
+            >
+              Search
+            </Button>
+          </div>
         </div>
-        <div
-          className="flex items-center justify-center mt-4 text-base font-bold bg-teal-700 h-9 w-40 text-white gap-1 rounded-md cursor-pointer"
-          onClick={handleCurrentLocationClick}
-        >
-          <GpsFixedIcon />
-          <p className="text-sm">Current Location</p>
-        </div>
+
+        
       </div>
     </nav>
   );

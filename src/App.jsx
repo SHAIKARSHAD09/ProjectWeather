@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import WeatherCard from "../src/components/WeatherCard";
 import FiveDay from "../src/components/FiveDay";
 import HourlyWeather from "../src/components/HourlyWeather";
 import TodayHighlights from "../src/components/TodayHighlights";
 import SearchBar from "./components/SearchBar";
 import axios from "axios";
+import Footer from "./components/Footer";
 import Map from "./components/Map";
 import About from "./components/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -80,24 +81,28 @@ const WeatherDashboard = () => {
             <div className="mt-2 mb-5 w-full">
               {hourlyForecast && <HourlyWeather forecastData={hourlyForecast} />}
             </div>
-            <div className="grid grid-rows-2 grid-flow-col gap-4 flex justify-center">
-              <div className="md:row-span-3">
+            <div className="flex flex-col lg:flex-row gap-4 w-full">
+              {/* TodayHighlights */}
+              <div className="w-full lg:w-2/3">
                 <TodayHighlights weatherData={weatherData} airQualityData={airQualityData} />
               </div>
-              <div className="col-span-2">
+              <div className="w-full lg:w-1/3 sm:max-w-md mx-auto">
                 <WeatherCard weatherData={weatherData} />
               </div>
-              <div className="col-span-2 row-span-2 mt-4">
-                
+              {/* FiveDay Forecast */}
+              <div className="w-full sm:max-w-md mx-auto lg:w-1/3 mt-4 lg:mt-0">
                 {fiveDayForecast && <FiveDay forecastData={fiveDayForecast} />}
               </div>
             </div>
+
             <div>
               {/* Search bar component */}
               <SearchBar onSearch={handleLocationSearch} />
               {/* Map component */}
               <Map searchPosition={searchPosition} />
             </div>
+
+            <div><Footer /></div>
           </div>
         )}
       </div>

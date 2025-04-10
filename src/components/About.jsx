@@ -12,6 +12,13 @@ const About = () => {
           As the sole developer behind WeatherApp, I am committed to ensuring you have access to the latest weather data at your fingertips. With easy-to-use features, you can explore current weather conditions, hourly forecasts, five-day predictions, and air quality information in just a few clicks.
         </p>
         
+        <p className="text-sm text-center mt-4 text-gray-400">
+          Weather data provided by <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer" className="underline">OpenWeather</a>
+        </p>
+
+        
+
+        
       </div>
     );
   };
